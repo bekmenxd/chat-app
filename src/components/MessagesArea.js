@@ -13,14 +13,14 @@ export default class App extends Component {
   componentWillMount() {
     MessageStore.on('change', () => {
       this.setState({
-        messages: MessageStore.getAll().map(m => <Message user={m.user} message={m.message} offset={m.offset} key={m.offset}/>)
+        messages: MessageStore.getAll().map(m => <Message user={m.user} message={m.message} key={Math.random()}/>)
       })
     })
   }
 
   render() {
     return (
-      <div>
+      <div style={{width: '80%'}}>
         {this.state.messages}
       </div>
     );
