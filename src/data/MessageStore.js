@@ -15,25 +15,17 @@ class MessageStore extends EventEmitter {
     }
 
     getAll() {
-        for (let i = 0; i < this.messages.length; i++) {
-            this.messages[i] = {
-                user: this.messages[i].user,
-                message: this.messages[i].message,
-                offset: this.messages[i].offset + 1
-            }
-        }
-
-        return (this.messages)
+        return (this.messages.reverse())
     }
 
     newMessageFromSocket(user, message) {
         console.log('we update bois');
-        this.messages.push({user: user, message: message, offset: 0});
+        this.messages.push({user: user, message: message});
         this.emit('change');
     }
 
     newMessage(user, message) {
-        this.messages.push({user: user, message: message, offset: 0});
+        this.messages.push({user: user, message: message});
 
         socket.emit('addednewmessage', {user: user, message: message});
 

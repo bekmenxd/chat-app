@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import MessagesArea from './components/MessagesArea.js';
 import MessagingArea from './components/MessagingArea.js';
 import Login from './components/Login.js';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+// Needed for onTouchTap 
+// http://stackoverflow.com/a/34015469/988941 
+injectTapEventPlugin();
 
 export default class App extends Component {
   constructor(props) {
@@ -16,8 +22,8 @@ export default class App extends Component {
       this.setState({
         view: 
           <div>
-            <MessagesArea />
             <MessagingArea user={sessionStorage.getItem('hamsolochat')}/>
+            <MessagesArea />
           </div>
       });
     } else {
@@ -36,8 +42,8 @@ export default class App extends Component {
       this.setState({
           view: 
             <div>
-              <MessagesArea />
               <MessagingArea user={sessionStorage.getItem('hamsolochat')}/>
+              <MessagesArea />
             </div>
       });
     }
@@ -45,9 +51,9 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
+      <MuiThemeProvider>
         {this.state.view}
-      </div>
+      </MuiThemeProvider>
     );
   }
 }

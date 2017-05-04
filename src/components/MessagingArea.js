@@ -1,48 +1,32 @@
 import React, { Component } from 'react';
 import * as MessageActions from '../data/MessageActions.js';
+import { RaisedButton, TextField, Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui'
 
 export default class MessagingArea extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
-      style: {
-        messageArea: {
-          position: 'fixed',
-          top: 'calc(100% - 75px)',
-          width: '100%',
-          height: '75px',
-          border: '1px solid lightgray',
-          input : {
-            position: 'absolute',
-            width: '50%',
-            top: '10px',
-            left: '10px',
-            padding: 0,
-            height: '50px',
-            resize: 'none'
-          },
-          button: {
-            position: 'absolute',
-            left: 'calc(50% + 70px)',
-            width: '70px',
-            height: '50px',
-            top: '10px'
-          },
-          username: {
-            position: 'absolute',
-            left: 'calc(50% + 200px)',
-            lineHeight: '75px',
-            margin: 0,
-          }
-        }
-      }
+      value: ''
     }
   }
 
   newMessage() {
     if (/\S/.test(this.state.value)) {
       MessageActions.newMessage(this.props.user, this.state.value)
+      this.setState({
+        value: ''
+      });
+    }
+  }
+
+  newMessageWithKey(ev) {
+    if (ev.keyCode === 13) {
+        if (/\S/.test(this.state.value)) {
+            MessageActions.newMessage(this.props.user, this.state.value)
+            this.setState({
+                value: ''
+            });
+        }
     }
   }
 
@@ -54,21 +38,27 @@ export default class MessagingArea extends Component {
 
   render() {
     return (
-      <div>
-        <div style={this.state.style.messageArea}>
-
-          <textarea 
-            style={this.state.style.messageArea.input} 
-            placeholder='New message' 
-            onChange={this.handleInput.bind(this)} 
-            value={this.state.value}/>
+      <Toolbar style={{height: 'auto', width: '100%'}}>
+          <ToolbarGroup firstChild={true} style={{width: '80%'}}>
+            <TextField
+                style={{width: '80%', margin: 15}}
+                onKeyUp={this.newMessageWithKey.bind(this)}
+                multiLine={true}
+                hintText='New message' 
+                onChange={this.handleInput.bind(this)} 
+                value={this.state.value}/>
             
-          <button 
-            style={this.state.style.messageArea.button} 
-            onClick={this.newMessage.bind(this)}>Send</button>
-          <h2 style={this.state.style.messageArea.username}>Username: {this.props.user}</h2>
-        </div>
-      </div>
+            <RaisedButton
+                primary={true}
+                label="Send"
+                onTouchTap={this.newMessage.bind(this)} />
+
+            <ToolbarSeparator />
+        </ToolbarGroup>
+        <ToolbarGroup lastChild={true} >
+            <ToolbarTitle text={this.props.user} />
+        </ToolbarGroup>
+      </Toolbar>
     );
   }
 }
