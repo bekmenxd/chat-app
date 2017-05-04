@@ -38,7 +38,7 @@ export default class MessagingArea extends Component {
 
   render() {
     return (
-      <Toolbar style={{height: 'auto', width: '100%'}}>
+      <Toolbar style={{position: 'fixed', height: 'auto', width: 'calc(100% - 200px)', top: '0'}}>
           <ToolbarGroup firstChild={true} style={{width: '80%'}}>
             <TextField
                 style={{width: '80%', margin: 15}}

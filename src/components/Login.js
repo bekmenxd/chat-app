@@ -18,7 +18,7 @@ export default class Login extends Component {
         return(
             <div>
                 <input placeholder='Username' value={this.state.value} onChange={this.handleInput.bind(this)}/>
-                <button onClick={this.props.success.bind(this, this.state.value)}>Login</button>
+                <button onClick={this.props.tryLogin.bind(this, this.state.value)}>Login</button>
             </div>
         )
     }

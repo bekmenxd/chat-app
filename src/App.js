@@ -4,6 +4,10 @@ import MessagingArea from './components/MessagingArea.js';
 import Login from './components/Login.js';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import UserList from './components/UserList.js';
+
+const io = require('socket.io-client');
+const socket = io();
 
 // Needed for onTouchTap 
 // http://stackoverflow.com/a/34015469/988941 
@@ -23,27 +27,32 @@ export default class App extends Component {
         view: 
           <div>
             <MessagingArea user={sessionStorage.getItem('hamsolochat')}/>
-            <MessagesArea />
+            <MessagesArea/>
+            <UserList/>
           </div>
       });
     } else {
       this.setState({
         view:
           <div>
-            <Login success={this.successLogin.bind(this)}/>
+            <Login tryLogin={this.tryLogin.bind(this)}/>
           </div>
       })
     }
   }
 
-  successLogin(user) {
+  tryLogin(user) {
     if (user && user.length > 0) {
+
+      socket.emit('newuser', {user: user});
+
       sessionStorage.setItem('hamsolochat', user);
       this.setState({
           view: 
             <div>
               <MessagingArea user={sessionStorage.getItem('hamsolochat')}/>
               <MessagesArea />
+              <UserList />
             </div>
       });
     }
