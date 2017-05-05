@@ -20,7 +20,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div style={{width: 'calc(100% - 200px)', marginTop: '100px'}}>
+      <div style={{width: 'calc(100% - 250px)', marginTop: '100px'}}>
         {this.state.messages}
       </div>
     );

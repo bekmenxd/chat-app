@@ -12,16 +12,16 @@ export default class UserList extends Component {
     componentWillMount() {
         UserStore.on('change', () => {
             this.setState({
-                users: UserStore.getAll().map(u => <ListItem primaryText={u} />)
+                users: UserStore.getAll().map(u => <ListItem primaryText={u.name} />)
             })
         });
     }
 
     render() {
         return(
-            <div style={{position: 'fixed', left: 'calc(100% - 200px)', width: '200px', top: '0'}}>
+            <div style={{position: 'fixed', left: 'calc(100% - 250px)', width: '250px', top: '0', borderLeft: '1px lightgrey solid', height: '100%'}}>
                 <List>
-                    <Subheader>Connected Users</Subheader>
+                    <Subheader style={{height: '80px', lineHeight: '125px', fontSize: '20px'}}>Connected Users</Subheader>
                 </List>
                 <Divider/>
                 <List>

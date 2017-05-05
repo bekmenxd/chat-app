@@ -16,6 +16,7 @@ export default class MessagingArea extends Component {
       this.setState({
         value: ''
       });
+      this.props.emit(this.props.user, this.state.value);
     }
   }
 
@@ -26,6 +27,7 @@ export default class MessagingArea extends Component {
             this.setState({
                 value: ''
             });
+            this.props.emit(this.props.user, this.state.value);
         }
     }
   }
@@ -38,11 +40,12 @@ export default class MessagingArea extends Component {
 
   render() {
     return (
-      <Toolbar style={{position: 'fixed', height: 'auto', width: 'calc(100% - 200px)', top: '0'}}>
+      <Toolbar style={{position: 'fixed', height: '90px', width: 'calc(100% - 250px)', top: '0', maxHeight: '90px', overflow: 'auto'}}>
           <ToolbarGroup firstChild={true} style={{width: '80%'}}>
             <TextField
                 style={{width: '80%', margin: 15}}
                 onKeyUp={this.newMessageWithKey.bind(this)}
+                onKeyDown={ev => {if (ev.keyCode === 13) {ev.preventDefault()}}}
                 multiLine={true}
                 hintText='New message' 
                 onChange={this.handleInput.bind(this)} 

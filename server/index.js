@@ -10,7 +10,7 @@ app.get('*', (req, res) => {
 
 const http = require('http').createServer(app);
 
-http.listen(3000, () => {
+http.listen(5000, () => {
     console.log('Listening on port 3000!');
 });
 
@@ -20,17 +20,20 @@ let users = [];
 
 io.on('connection', (socket) => {
 
-    socket.on('addednewmessage', (data) => {
+    socket.on('newmessage', (data) => {
         console.log(data.user + ' sent "' + data.message + '".');
         socket.broadcast.emit('receivednewmessage', data);
     });
 
     socket.on('newuser', (data) => {
-        users.push(data.user);
+        console.log(data + ' joined');
+        users.push({name: data, id: socket.id});
         io.emit('userjoined', users);
     })
 
     socket.on('disconnect', () => {
-        console.log('User disconnected');
+        console.log(users.filter(u => u.id === socket.id)[0].name + ' disconnected')
+        users = users.filter(u => u.id !== socket.id)
+        io.emit('userleft', users)
     });
 });

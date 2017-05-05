@@ -1,30 +1,40 @@
 import { EventEmitter } from 'events';
 import Dispatcher from './Dispatcher.js';
 
-const io = require('socket.io-client');
-const socket = io();
-
 class UserStore extends EventEmitter {
     constructor() {
         super();
         this.users = [];
-
-        socket.on('userjoined', data => {
-            this.addUser(data);
-        });
     }
 
     getAll() {
         return this.users;
     }
 
-    addUser(newUser) {
-        this.users = newUser;
+    addUser(users) {
+        this.users = users;
+        this.emit('change');
+    }
+
+    removeUser(users) {
+        this.users = users;
         this.emit('change');
     }
 
     handleActions(action) {
-
+        switch(action.type) {
+            case "USER_JOINED": {
+                this.addUser(action.users);
+                break;
+            }
+            case "USER_LEFT": {
+                this.removeUser(action.users);
+                break;
+            }
+            default: {
+                break;
+            }
+        }
     }
 }
 
