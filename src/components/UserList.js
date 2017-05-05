@@ -20,8 +20,8 @@ export default class UserList extends Component {
     render() {
         return(
             <div style={{position: 'fixed', left: 'calc(100% - 250px)', width: '250px', top: '0', borderLeft: '1px lightgrey solid', height: '100%'}}>
-                <List>
-                    <Subheader style={{height: '80px', lineHeight: '125px', fontSize: '20px'}}>Connected Users</Subheader>
+                <List style={{backgroundColor: 'rgb(232, 232, 232)'}}>
+                    <Subheader style={{height: '81px', lineHeight: '125px', fontSize: '20px'}}>Connected Users</Subheader>
                 </List>
                 <Divider/>
                 <List>

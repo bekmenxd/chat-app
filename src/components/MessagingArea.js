@@ -21,7 +21,8 @@ export default class MessagingArea extends Component {
   }
 
   newMessageWithKey(ev) {
-    if (ev.keyCode === 13) {
+    if (ev.keyCode === 13 && !ev.shiftKey) {
+        ev.preventDefault();
         if (/\S/.test(this.state.value)) {
             MessageActions.newMessage(this.props.user, this.state.value)
             this.setState({
@@ -44,8 +45,7 @@ export default class MessagingArea extends Component {
           <ToolbarGroup firstChild={true} style={{width: '80%'}}>
             <TextField
                 style={{width: '80%', margin: 15}}
-                onKeyUp={this.newMessageWithKey.bind(this)}
-                onKeyDown={ev => {if (ev.keyCode === 13) {ev.preventDefault()}}}
+                onKeyDown={this.newMessageWithKey.bind(this)}
                 multiLine={true}
                 hintText='New message' 
                 onChange={this.handleInput.bind(this)} 
